@@ -1,0 +1,32 @@
+plugins {
+    id 'java-library'
+    id 'fmu4j'
+}
+
+println "Gradle version is ${gradle.getGradleVersion()}"
+
+wrapper {
+    gradleVersion = '7.2'
+    distributionType = Wrapper.DistributionType.ALL
+}
+
+
+repositories {
+    mavenCentral()
+    maven { url "https://ais.jfrog.io/artifactory/ais-gradle-release-local" }
+}
+
+dependencies {
+    implementation "no.ntnu.ais.fmu4j:fmi-export:0.1.0"
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
+fmu4j {
+    mainClasses = ["example.JavaSlave"]
+}
