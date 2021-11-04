@@ -9,6 +9,7 @@ Download and install a JDK version 8:
 * https://adoptopenjdk.net/
 * https://docs.aws.amazon.com/de_de/corretto/latest/corretto-8-ug/downloads-list.html
 * https://www.openlogic.com/openjdk-downloads
+* https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html
 
 ### set the JAVA_HOME path:
 
@@ -28,6 +29,9 @@ export LD_LIBRARY_PATH=$JAVA_HOME/lib:$JAVA_HOME/lib/amd64/server:$PATH
 
 ## create FMU
 
+1) Implement an instance of `Fmi2Slave`. See https://github.com/Vico-platform/fmu4j_template/blob/main/src/main/java/example/JavaSlave.java
+2) Specify the fully qualified class name of the FMUs you have implemented in the `fmu4j` closure in `build.gradle`. Note that multiple FMUs can be implemented and built within the same project.
+
 ### Windows
 
 ```
@@ -39,6 +43,6 @@ gradlew.bat build fmu
 ./gradlew build fmu
 ```
 
-This should create the FMU in build/fmus
+This should create the FMU(s) in build/fmus
 
 
