@@ -57,14 +57,7 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-                   
-      - name:  set enviroment windows
-        run:   |
-               if [ "$RUNNER_OS" == "Windows" ]; then
-                    echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
-               fi
-        shell: bash
-        
+                          
       - name: Setup Python 3.x
         uses: actions/setup-python@v2
         with:
@@ -76,6 +69,8 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
           fi
           # Install  dependencies
           python -m pip install fmpy[complete]
