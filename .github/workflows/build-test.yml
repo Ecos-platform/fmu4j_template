@@ -50,7 +50,7 @@ jobs:
       - name: Download python package
         uses: actions/download-artifact@v1
         with:
-          name: python-wheel
+          name: fmus
 
       - name: Setup Python 39
         uses: conda-incubator/setup-miniconda@v2
