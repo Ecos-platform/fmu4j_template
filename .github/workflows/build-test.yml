@@ -65,13 +65,16 @@ jobs:
           architecture: 'x64'
       
       - name: Run the Tests
-        shell: bash
+        shell: bash -l {0}
         run: |
+          echo $JAVA_HOME
+          echo $PATH
           if [ "$RUNNER_OS" == "Linux" ]; then
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
           elif [ "$RUNNER_OS" == "Windows" ]; then
             echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
           fi
+          echo $GITHUB_PATH
           # Install  dependencies
           python -m pip install fmpy[complete]
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
