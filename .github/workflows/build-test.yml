@@ -70,13 +70,13 @@ jobs:
           echo "Path: $PATH"
           echo "Runner: $RUNNER_OS"
           echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
-          echo "GITHUB_PATH: $GITHUB_PATH
+          echo "GITHUB_PATH: $GITHUB_PATH"
           if [ "$RUNNER_OS" == "Linux" ]; then
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
           elif [ "$RUNNER_OS" == "Windows" ]; then
-            echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
+            export PATH="$JAVA_HOME/jre/bin/server:${PATH}"
           fi
-          echo "GITHUB_PATH $GITHUB_PATH"
+          echo "Path: $PATH"
           # Install  dependencies
           python -m pip install fmpy[complete]
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
