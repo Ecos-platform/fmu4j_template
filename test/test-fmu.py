@@ -6,6 +6,6 @@ model = load_fmu('../build/fmus/JavaSlave.fmu')
 
 
 res = model.simulate(final_time=1)
-print(res)
+print(res['someReal'])
 
 
