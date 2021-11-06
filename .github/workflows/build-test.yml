@@ -70,8 +70,7 @@ jobs:
           conda activate test
           # Install  dependencies
           conda install -c conda-forge pyfmi
-          mkdir build/fmus
-          cp fmus/JavaSlave.fmu build/fmus
+          mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
           cd test
           python test-fmu.py
         
