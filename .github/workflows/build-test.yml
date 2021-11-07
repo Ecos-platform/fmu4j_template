@@ -63,18 +63,29 @@ jobs:
         with:
           python-version: '3.9'
           architecture: 'x64'
+          
+      - name:  set enviroment windows
+        run:   |
+               if [ "$RUNNER_OS" == "Windows" ]; then
+                    echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
+               fi
+               cat $GITHUB_PATH"
+               echo "Path: $PATH"
+        shell: bash
       
       - name: Run the Tests
+        shell: bash
         run: |
           echo "JavaHome: $JAVA_HOME"
           echo "Path: $PATH"
           echo "Runner: $RUNNER_OS"
           echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
           echo "GITHUB_PATH: $GITHUB_PATH"
-          if: runner.os == 'Linux'
+          cat $GITHUB_PATH"
+          if [ "$RUNNER_OS" == "Linux" ]; then
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
-          if: runner.os == 'Windows'
-            echo "mypath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+          fi
+
           echo "Path: $PATH"
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
           # Install  dependencies
