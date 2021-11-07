@@ -35,13 +35,43 @@ jobs:
           name: fmus
           path: build/fmus
           
-  test:
+  test-linux:
     needs: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Download python package
+        uses: actions/download-artifact@v1
+        with:
+          name: fmus
+          
+      - name: Set up JDK 8
+        uses: actions/setup-java@v2
+        with:
+          java-version: '8'
+          distribution: 'adopt'
+                          
+      - name: Setup Python 3.x
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+          architecture: 'x64'
+          
+      - name: Run the Tests
+        run: |
+          export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
+          # Install  dependencies
+          python -m pip install fmpy
+          mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
+          cd test
+          python test-fmu.py
+
+  test-windows:
+    needs: build
+    runs-on: windows-latest
     timeout-minutes: 20
 
     steps:
@@ -65,23 +95,16 @@ jobs:
           architecture: 'x64'
           
       - name:  set enviroment windows
-        if: runner.os == 'Windows'
         run:   |
               $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
               echo "$Env:JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
-              echo "Path: $Env:Path"
       
       - name: Run the Tests
-        shell: bash -l {0}
         run: |
-          echo "Path: $PATH"
-          ls $JAVA_HOME\jre\bin\server
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
-          fi
+          $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
+          echo "Path: $Env:Path"
           # Install  dependencies
           python -m pip install fmpy
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
           cd test
           python test-fmu.py
-        
