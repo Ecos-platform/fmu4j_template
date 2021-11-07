@@ -69,10 +69,7 @@ jobs:
         run:   |
               $Env:Path += ";$JAVA_HOME\jre\bin\server"
               echo "Path: $Env:Path"
-              if ("$RUNNER_OS" == "Windows" )
-              {
-                   echo "$JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
-              }
+              echo "$JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
               cat $GITHUB_PATH
               echo "Path: $PATH"
       
