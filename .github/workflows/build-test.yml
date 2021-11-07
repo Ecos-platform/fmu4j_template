@@ -102,6 +102,9 @@ jobs:
       - name: Run the Tests
         run: |
           $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
+          Get-ChildItem $Env:JAVA_HOME\jre\bin\server
+          Get-ChildItem $Env:JAVA_HOME\jre\bin\
+          Get-ChildItem $Env:JAVA_HOME\jre\
           echo "Path: $Env:Path"
           # Install  dependencies
           python -m pip install fmpy
