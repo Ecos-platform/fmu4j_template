@@ -73,17 +73,13 @@ jobs:
           echo "GITHUB_PATH: $GITHUB_PATH"
           if: runner.os == 'Linux'
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
-          if [ "$RUNNER_OS" == "Linux" ]; then
-            export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
-          elif [ "$RUNNER_OS" == "Windows" ]; then
-            export PATH="$JAVA_HOME/jre/bin/server:${PATH}"
-            export PATH="/c/hostedtoolcache/windows/Java_Adopt_jdk/8.0.312-7/x64/jre/bin/server:${PATH}"
-          fi
+          if: runner.os == 'Windows'
+            echo "mypath" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           echo "Path: $PATH"
+          echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
           # Install  dependencies
-          python -m pip install fmpy[complete]
+          python -m pip install fmpy
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
           cd test
           python test-fmu.py
-        shell: bash
         
