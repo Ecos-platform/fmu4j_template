@@ -102,6 +102,7 @@ jobs:
       - name: Run the Tests
         run: |
           $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
+          $Env:Path += ";$Env:JAVA_HOME\jre\bin"
           Get-ChildItem $Env:JAVA_HOME\jre\bin\server
           Get-ChildItem $Env:JAVA_HOME\jre\bin\
           Get-ChildItem $Env:JAVA_HOME\jre\
