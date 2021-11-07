@@ -67,10 +67,8 @@ jobs:
       - name:  set enviroment windows
         if: runner.os == 'Windows'
         run:   |
-              $Env:Path += ";$JAVA_HOME\jre\bin\server"
+              $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
               echo "Path: $Env:Path"
-              echo "$JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
-              cat $GITHUB_PATH
               echo "Path: $PATH"
       
       - name: Run the Tests
