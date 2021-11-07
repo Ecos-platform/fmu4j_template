@@ -69,7 +69,7 @@ jobs:
                if [ "$RUNNER_OS" == "Windows" ]; then
                     echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
                fi
-               cat $GITHUB_PATH"
+               cat $GITHUB_PATH
                echo "Path: $PATH"
         shell: bash
       
@@ -81,7 +81,7 @@ jobs:
           echo "Runner: $RUNNER_OS"
           echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
           echo "GITHUB_PATH: $GITHUB_PATH"
-          cat $GITHUB_PATH"
+          cat $GITHUB_PATH
           if [ "$RUNNER_OS" == "Linux" ]; then
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
           fi
