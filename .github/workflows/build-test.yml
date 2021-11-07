@@ -65,16 +65,19 @@ jobs:
           architecture: 'x64'
           
       - name:  set enviroment windows
+        if: runner.os == 'Windows'
         run:   |
-               if [ "$RUNNER_OS" == "Windows" ]; then
-                    echo "$JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
-               fi
-               cat $GITHUB_PATH
-               echo "Path: $PATH"
-        shell: bash
+              $Env:Path += ";$JAVA_HOME\jre\bin\server"
+              echo "Path: $Env:Path"
+              if ("$RUNNER_OS" == "Windows" )
+              {
+                   echo "$JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
+              }
+              cat $GITHUB_PATH
+              echo "Path: $PATH"
       
       - name: Run the Tests
-        shell: bash
+        shell: bash -l {0}
         run: |
           echo "JavaHome: $JAVA_HOME"
           echo "Path: $PATH"
