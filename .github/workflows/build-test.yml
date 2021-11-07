@@ -35,9 +35,13 @@ jobs:
           name: fmus
           path: build/fmus
           
-  test-linux:
+  test:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
     timeout-minutes: 20
 
     steps:
@@ -53,42 +57,7 @@ jobs:
         with:
           java-version: '8'
           distribution: 'adopt'
-                          
-      - name: Setup Python 3.x
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-          architecture: 'x64'
           
-      - name: Run the Tests
-        run: |
-          export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
-          # Install  dependencies
-          python -m pip install fmpy
-          mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
-          cd test
-          python test-fmu.py
-
-  test-windows:
-    needs: build
-    runs-on: windows-latest
-    timeout-minutes: 20
-
-    steps:
-                  
-      - uses: actions/checkout@v2
-
-      - name: Download python package
-        uses: actions/download-artifact@v1
-        with:
-          name: fmus
-          
-      - name: Set up JDK 8
-        uses: actions/setup-java@v2
-        with:
-          java-version: '8'
-          distribution: 'adopt'
-                          
       - name: Setup Python 39
         uses: conda-incubator/setup-miniconda@v2
         with:
@@ -97,17 +66,22 @@ jobs:
           
       - name:  set enviroment windows
         run:   |
-              echo $Env:Path
-              echo $Env:JAVA_HOME
-              echo $env:JAVA_HOME
-              echo "$env:JAVA_HOME\jre\bin\server" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-              Get-Content -Path $env:GITHUB_PATH 
-              
+               if [ "$RUNNER_OS" == "Windows" ]; then
+                    echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
+               fi
+        shell: bash
+      
       - name: Run the Tests
         shell: bash -l {0}
         run: |
           conda activate test
+          if [ "$RUNNER_OS" == "Linux" ]; then
+            export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
+          fi
+          echo $LD_LIBRARY_PATH
+          echo $JAVA_HOME
           # Install  dependencies
+          # conda install -c conda-forge pyfmi
           pip install fmpy
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
           cd test
