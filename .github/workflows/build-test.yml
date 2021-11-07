@@ -75,15 +75,7 @@ jobs:
     timeout-minutes: 20
 
     steps:
-    
-      - name:  set enviroment windows
-        run:   |
-              echo $Env:Path
-              echo $Env:JAVA_HOME
-              echo $env:JAVA_HOME
-              echo "$env:JAVA_HOME\jre\bin\server" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-              Get-Content -Path $env:GITHUB_PATH
-              
+                  
       - uses: actions/checkout@v2
 
       - name: Download python package
@@ -103,6 +95,14 @@ jobs:
           auto-update-conda: true
           python-version: 3.9
           
+      - name:  set enviroment windows
+        run:   |
+              echo $Env:Path
+              echo $Env:JAVA_HOME
+              echo $env:JAVA_HOME
+              echo "$env:JAVA_HOME\jre\bin\server" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+              Get-Content -Path $env:GITHUB_PATH 
+              
       - name: Run the Tests
         shell: bash -l {0}
         run: |
