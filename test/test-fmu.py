@@ -1,13 +1,13 @@
 # Import the load function (load_fmu)
-from fmpy import *
-# import fmpy
+from pyfmi import load_fmu
 
-fmu = '../build/fmus/JavaSlave.fmu'
 #Load the FMU
+model = load_fmu('../build/fmus/JavaSlave.fmu')
 
-result = simulate_fmu(fmu)
-print(result)
-print(result['someReal'])
+
+res = model.simulate(final_time=1)
 
 last_val = res['someReal'][-1]
 assert last_val <= 1 and last_val > 0.9
+
+

@@ -81,8 +81,8 @@ jobs:
           echo $LD_LIBRARY_PATH
           echo $JAVA_HOME
           # Install  dependencies
-          # conda install -c conda-forge pyfmi
-          pip install fmpy
+          conda install -c conda-forge pyfmi
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
           cd test
           python test-fmu.py
+        
