@@ -67,7 +67,7 @@ jobs:
       - name:  set enviroment windows
         run:   |
                if [ "$RUNNER_OS" == "Windows" ]; then
-                    echo "$JAVA_HOME/jre/bin/server" >> $GITHUB_PATH
+                    echo "$JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
                fi
                cat $GITHUB_PATH
                echo "Path: $PATH"
@@ -85,7 +85,9 @@ jobs:
           if [ "$RUNNER_OS" == "Linux" ]; then
             export LD_LIBRARY_PATH="$JAVA_HOME/jre/lib/amd64/server:${LD_LIBRARY_PATH}"
           fi
-
+          C:\hostedtoolcache\windows\Java_Adopt_jdk\8.0.312-7\x64/jre/bin/server
+          export PATH="/c/hostedtoolcache/windows/Java_Adopt_jdk/8.0.312-7/x64/jre/bin/server:${PATH}"
+          export LD_LIBRARY_PATH="/c/hostedtoolcache/windows/Java_Adopt_jdk/8.0.312-7/x64/jre/bin/server:${LD_LIBRARY_PATH}"
           echo "Path: $PATH"
           echo "LD_LIBRARY_PATH: $LD_LIBRARY_PATH"
           # Install  dependencies
