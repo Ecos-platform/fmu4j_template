@@ -96,20 +96,11 @@ jobs:
           
       - name:  set enviroment windows
         run:   |
-              $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
+              echo $Env:Path
               echo "$Env:JAVA_HOME\jre\bin\server" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-              echo "$Env:JAVA_HOME\jre\bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-              echo "$Env:JAVA_HOME\jre\bin\server" >> $GITHUB_PATH
       
       - name: Run the Tests
         run: |
-          echo "$Env:JAVA_HOME\jre\bin\server" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          $Env:Path += ";$Env:JAVA_HOME\jre\bin\server"
-          $Env:Path += ";$Env:JAVA_HOME\jre\bin"
-          Get-ChildItem $Env:JAVA_HOME\jre\bin\server
-          Get-ChildItem $Env:JAVA_HOME\jre\bin\
-          Get-ChildItem $Env:JAVA_HOME\jre\
-          echo "Path: $Env:Path"
           # Install  dependencies
           python -m pip install fmpy
           mkdir -p build/fmus && cp fmus/JavaSlave.fmu build/fmus
