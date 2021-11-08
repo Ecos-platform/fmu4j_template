@@ -22,8 +22,8 @@ Linux (add to .bashrc)
 ```
 export JAVA_HOME="java installation folder"
 export PATH=$JAVA_HOME/bin:$PATH
-# $JAVA_HOME/lib/amd64/server should contain libjvm.so
-export LD_LIBRARY_PATH=$JAVA_HOME/lib:$JAVA_HOME/lib/amd64/server:$PATH 
+# $JAVA_HOME/jre/lib/amd64/server should contain libjvm.so
+export LD_LIBRARY_PATH=$JAVA_HOME/lib:$JAVA_HOME/jre/lib/amd64/server:$LD_LIBRARY_PATH 
 ```
 
 
