@@ -13,11 +13,12 @@ wrapper {
 
 repositories {
     mavenCentral()
+    maven { url "https://ais.jfrog.io/artifactory/ais-gradle-dev-local" }
     maven { url "https://ais.jfrog.io/artifactory/ais-gradle-release-local" }
 }
 
 dependencies {
-    implementation "no.ntnu.ais.fmu4j:fmi-export:0.1.1"
+    implementation "no.ntnu.ais.fmu4j:fmi-export:0.1.2-SNAPSHOT"
 }
 
 jar {
